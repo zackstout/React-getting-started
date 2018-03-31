@@ -1,6 +1,6 @@
 
 # React App
-*Vid 1:
+*Vid 1*:
 `create-react-app react-starter` to spin up app.
 
 `src/index.js` kicks it all off, loads in `src/App.js`.
@@ -9,7 +9,7 @@ Note: work in VS Code to avoid Atom's linter errors.
 
 Webpack, implemented by React, allows us to use `import`.
 
-*Vids 2-4:
+*Vids 2-4*:
 Always use `super` and `props` for constructors, so you never have to worry about needing it.
 
 React abhors 2-way binding because of its difficulty to debug.
@@ -36,3 +36,9 @@ So we have to set `value={this.state.user.name}` to the input manually.
 The default behavior of a form is to refresh the page by going to a different URL (e.g. `localhost3000/?`). So we have to preventDefault.
 
 *Vid 9*:
+In order to splat something onto the DOM, use `JSON.stringify(___)`.
+
+Note: JSX elements need to all be wrapped within a single parent `div`.
+
+React can't directly display objects to the DOM, but it *can* display arrays.
+
