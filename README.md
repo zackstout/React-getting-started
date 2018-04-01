@@ -49,3 +49,11 @@
 - Users can add stars to the list which updates on the DOM.
 
 *Vid 13*:
+- `this.props` allows us to pass functions and data from the hosting component (e.g. App.js) to the hosted component (e.g. Header.js or NewStar.js).
+- But why wouldn't we just put those functions and that data in the component, where they should live?
+
+*Vid 14*:
+- Axios for basic HTTP requests.
+
+
+- I wonder why we need `nodemon` to run the server scripts in the student list project. `npm start` *seemed* like it worked fine.

@@ -2,9 +2,13 @@
 import React, { Component } from 'react';
 // nice, gives an error to signal we don't need this:
 // import logo from './logo.svg';
+import axios from 'axios';
 import './App.css';
 import Header from '../Header/Header.js';
 import Instructions from '../Instructions/Instructions';
+import NewStar from '../NewStar/NewStar.js';
+import StarList from '../StarList/StarList.js';
+
 
 class App extends Component {
 
@@ -81,6 +85,20 @@ class App extends Component {
         });
       }
 
+      // componentDidMount() {
+      //   this.getPlanets();
+      // }
+
+      getPlanets = function() {
+        axios.get("https://swapi.co/api/planets/?format=json")
+          .then(res => {
+            console.log(res);
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
+
 
   render() {
     // let stars = [];
@@ -90,8 +108,9 @@ class App extends Component {
     // }
 
     // Using map:
-    const stars = this.state.starObjs.map(star => <li key= {star.name}> { star.name } has a diameter of { star.diameter } </li>);
+    const allStars = this.state.starObjs.map(star => <li key= {star.name}> { star.name } has a diameter of { star.diameter } </li>);
 
+    this.getPlanets();
     return (
       <div className="App">
         <Header />
@@ -100,27 +119,24 @@ class App extends Component {
         { this.state.message }
 
         {/* React can't disply objects directly to the DOM: */}
-        <div>
+        {/* <div>
           this.state: { JSON.stringify(this.state) }
-        </div>
+        </div> */}
 
         <div>
           starlist: { this.state.starList }
         </div>
 
         <form onSubmit={this.handleSubmitStar}>
-          <input value={this.state.newStar.name} onChange={this.handleStarChangeFor('name')} />
-          <input value={this.state.newStar.diameter} onChange={this.handleStarChangeFor('diameter')} />
+          <NewStar star={this.state.newStar} fn={this.handleStarChangeFor}/>
+         
           {/* Hmm, if we call this, it runs on every keyup: */}
           {/* <button onClick={this.handleClick}>Log User</button> */}
           <input type="submit" value="Submit the form"/>
         </form>
 
-
-     
-        <ul>
-          { stars }
-        </ul>
+        <StarList stars={ allStars }/>
+    d
 
         <p> The user is { this.state.user.name }, coming to use from regal { this.state.user.city }! </p>
 
