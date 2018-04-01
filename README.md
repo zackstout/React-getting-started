@@ -26,7 +26,7 @@
 *Vids 6-7*:
 - Note: need to use bracket notation for variable names of object keys: `[propName] = this.user....`.
 
-- Nice, with currying, because we're using arrow functions, we no longer need binding.
+- Nice, with currying, because we're using arrow functions, we no longer need `.bind(this)`.
 
 *Vid 8*:
 - We can write a click handler to log the current user values and clear them out, which updates the state, but not yet the input fields: No 2-way binding.
@@ -42,3 +42,10 @@
 
 - React can't directly display objects to the DOM, but it *can* display arrays.
 
+*Vids 10-11*:
+- Use .map() to avoid mutating state arrays (React's version of `ng-repeat`).
+
+*Vid 12*:
+- Users can add stars to the list which updates on the DOM.
+
+*Vid 13*:

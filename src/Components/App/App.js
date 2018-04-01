@@ -13,17 +13,26 @@ class App extends Component {
 
     // alter local state:
     this.state = {
+      newStar: {
+        name: '',
+        diameter: ''
+      },
       message: "hello",
       user: {
         name: '',
         city: ''
-      }
+      },
+      starList: ['deneb', 'elnath', 'canopus'],
+      unusedList: [<li>'hi'</li>, <li>'jsx'</li>],
+      starObjs: [{'name': 'deneb', 'diameter': 200}, {'name': 'elnath', 'diameter': 40}, {'name': 'canopus', 'diameter': 130}]
     }
     // this.handleChangeFor = this.handleChangeFor.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmitStar = this.handleSubmitStar.bind(this);
+
   }
 
   // Currying:
-
   // handleChangeFor = (propName) => {
   //   return (event) => {
   //     this.setState({user: {
@@ -41,20 +50,88 @@ class App extends Component {
           }});  
       }
 
+      handleStarChangeFor = propName => event => {
+        this.setState({newStar: {
+          ...this.state.newStar,
+          [propName] : event.target.value,
+        }});  
+    }
+
+      handleSubmit = function(event) {
+        event.preventDefault();
+        console.log(this.state.user);
+        this.setState({
+          user: {
+            name: '',
+            city: ''
+          }
+        })
+      }
+
+      handleSubmitStar = function(event) {
+        event.preventDefault();
+        console.log(this.state.newStar);
+        this.state.starObjs.push(this.state.newStar);
+        // clear out fields (well, clear state, which we tell fields to look at):
+        this.setState({
+          newStar: {
+            name: '',
+            diameter: ''
+          }
+        });
+      }
+
 
   render() {
+    // let stars = [];
+    // for (let i=0; i < this.state.starList.length; i++) {
+    //   const star = <li> { this.state.starList[i] } </li>;
+    //   stars.push(star);
+    // }
+
+    // Using map:
+    const stars = this.state.starObjs.map(star => <li key= {star.name}> { star.name } has a diameter of { star.diameter } </li>);
+
     return (
       <div className="App">
         <Header />
         <Instructions />
+
         { this.state.message }
+
+        {/* React can't disply objects directly to the DOM: */}
+        <div>
+          this.state: { JSON.stringify(this.state) }
+        </div>
+
+        <div>
+          starlist: { this.state.starList }
+        </div>
+
+        <form onSubmit={this.handleSubmitStar}>
+          <input value={this.state.newStar.name} onChange={this.handleStarChangeFor('name')} />
+          <input value={this.state.newStar.diameter} onChange={this.handleStarChangeFor('diameter')} />
+          {/* Hmm, if we call this, it runs on every keyup: */}
+          {/* <button onClick={this.handleClick}>Log User</button> */}
+          <input type="submit" value="Submit the form"/>
+        </form>
+
+
+     
+        <ul>
+          { stars }
+        </ul>
 
         <p> The user is { this.state.user.name }, coming to use from regal { this.state.user.city }! </p>
 
-        <p>
-          <input onChange={this.handleChangeFor('name')} />
-          <input onChange={this.handleChangeFor('city')} />
-        </p>
+      {/* Convert to form: */}
+        <form onSubmit={this.handleSubmit}>
+          <input value={this.state.user.name} onChange={this.handleChangeFor('name')} />
+          <input value={this.state.user.city} onChange={this.handleChangeFor('city')} />
+          {/* Hmm, if we call this, it runs on every keyup: */}
+          {/* <button onClick={this.handleClick}>Log User</button> */}
+          <input type="submit" value="Submit the form"/>
+        </form>
 
       </div>
     );
